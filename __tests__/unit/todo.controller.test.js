@@ -14,16 +14,17 @@ beforeEach(() => {
 TodoModel.create = jest.fn();
 
 describe('TodoController.createTodo', () => {
+    beforeEach(() => {
+        req.body = newTodo;
+    });
     it('Should have a createTodo function', () => {
         expect(typeof TodoController.createTodo).toBe('function');
     });
     it('Should call TodoModel.create', () => {
-        req.body = newTodo;
         TodoController.createTodo(req, res, next);
         expect(TodoModel.create).toBeCalledWith(newTodo);
     });
     it('Should return 201 response code', () => {
-        req.body = newTodo;
         TodoController.createTodo(req, res, next);
         expect(res.statusCode).toBe(201);
         expect(res._isEndCalled()).toBeTruthy();
